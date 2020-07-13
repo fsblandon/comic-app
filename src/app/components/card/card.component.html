@@ -1,0 +1,112 @@
+<div 
+    class="card">
+    <img 
+        src="{{image}}" 
+        class="card-img-top"
+        height="250"
+        alt="marvel"
+        (mouseover)="showDescription=true"
+        (mouseout)="showDescription=false">
+    <div 
+        class="card-body">
+        <div class="row">
+            <div class="col-8">
+                <h6 class="card-title font-larger">
+                    {{data.name ? data.name: data.title}}
+                </h6>
+            </div>
+            <div class="col-2">
+                <div class="form-check">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox"
+                        [checked]="favorite"
+                        (change)="changeStatus(data)"
+                        id="favoriteCheck">
+                    <label 
+                        class="form-check-label" 
+                        for="favoriteCheck">
+                        Favorite
+                    </label>
+                </div>
+            </div>
+        </div>
+        <p 
+            class="card-text h-50"
+            *ngIf="showDescription">
+            {{data.description}}
+        </p>
+
+        <button  
+            type="button"
+            class="btn btn-dark"
+            data-toggle="modal"
+            data-target="#infoM"
+            (click)="viewDetails(data.id)">
+            View Details
+        </button>
+        <div
+            *ngIf="item != null"
+            class="modal fade" 
+            id="infoM" 
+            tabindex="-1" 
+            role="dialog" 
+            aria-labelledby="modalLabel" 
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div 
+                    class="modal-content"
+                    *ngIf="item.id == data.id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">
+                            {{item.name ? item.name: item.title}}
+                        </h5>
+                       <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> -->
+                    </div>
+                    <div class="modal-body">
+                        <div *ngIf="item.comics != undefined">
+                            <div *ngIf="item.comics.items.length > 0">
+                                <h6>Comics</h6>
+                                <ul class="list-group"
+                                    *ngFor="let itemD of item.comics.items">
+                                    <li class="list-group-item">{{itemD.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div *ngIf="item.characters != undefined">
+                            <div *ngIf="item.characters.items.length > 0">
+                                <h6>Characters</h6>
+                                <ul class="list-group"
+                                    *ngFor="let itemD of item.characters.items">
+                                    <li class="list-group-item">{{itemD.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div *ngIf="item.stories != undefined">
+                            <div *ngIf="item.stories.items.length > 0">
+                                <h6>Stories</h6>
+                                <ul class="list-group"
+                                    *ngFor="let itemD of item.stories.items">
+                                    <li class="list-group-item">{{itemD.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn btn-secondary" 
+                            data-dismiss="modal"
+                            (click)="closeModal()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
